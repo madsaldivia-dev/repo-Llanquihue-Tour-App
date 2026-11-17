@@ -20,6 +20,10 @@ public class Main {
      */
     public static void main(String[] args) {
 
+        obtenerTours();
+    }
+
+    private static void obtenerTours() {
         // Crea una instancia de GestorDatos para acceder
         // al método que carga los tours desde el archivo.
         GestorDatos gestor = new GestorDatos();
