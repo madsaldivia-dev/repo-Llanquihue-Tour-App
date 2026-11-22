@@ -4,6 +4,7 @@ import model.Tour;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -32,19 +33,35 @@ public class GestorDatos {
             // Recorre el archivo hasta llegar al final.
             while ((linea = br.readLine()) != null) {
 
+                if(linea.isBlank()){
+                    continue;
+                }
+
                 // Divide los datos de la línea utilizando ";" como separador.
                 String[] datos = linea.split(";");
 
-                String nombre = datos[0];
-                String tipo = datos[1];
-                int precio = Integer.parseInt(datos[2]);
+                if (datos.length !=3){
+                    System.out.println("Linea invalida" + linea);
+                    continue;
 
-                Tour tour = new Tour(nombre, tipo, precio);
+                }
 
-                tours.add(tour);
+                try {
+
+                    String nombre = datos[0];
+                    String tipo = datos[1];
+                    int precio = Integer.parseInt(datos[2]);
+
+                    Tour tour = new Tour(nombre, tipo, precio);
+
+                    tours.add(tour);
+                }catch (NumberFormatException e){
+                    System.out.println("Precio invalido en linea:" + linea);
+
+                }
             }
 
-        } catch (Exception e) {
+        } catch (IOException e) {
 
             // Muestra un mensaje en caso de error durante la lectura.
             System.out.println("Error al leer archivo: " + e.getMessage());
