@@ -14,16 +14,22 @@ import java.util.ArrayList;
 public class GestorDatos {
 
 
+    private ArrayList <Tour> tours = new ArrayList<>();
+
+    public GestorDatos(String ruta){
+        tours = cargarTours(ruta );
+
+    }
+
     /**
      * Carga los tours almacenados en un archivo de texto.
      *
      * @param ruta ruta del archivo que contiene la información de los tours.
      * @return lista de objetos Tour cargados desde el archivo.
      */
-    public ArrayList<Tour> cargarTours(String ruta) {
+    public ArrayList <Tour> cargarTours(String ruta) {
 
-        // Lista donde se almacenarán todos los tours leídos.
-        ArrayList<Tour> tours = new ArrayList<>();
+        tours.clear();
 
         // Intenta abrir y leer el archivo indicado.
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
@@ -65,8 +71,27 @@ public class GestorDatos {
 
             // Muestra un mensaje en caso de error durante la lectura.
             System.out.println("Error al leer archivo: " + e.getMessage());
+
         }
+        return tours;
+    }
+    public ArrayList <Tour> listarTour(String rutaArchivos){
+
 
         return tours;
+    }
+    public ArrayList<Tour> buscarToursPorRangoPrecio (int precioMinimo,
+                                                      int precioMaximo){
+
+        ArrayList<Tour> toursFiltrados = new ArrayList<>();
+
+        for (Tour tour : tours){
+
+            if (tour.getPrecio() >= precioMinimo && tour.getPrecio() <= precioMaximo){
+
+                toursFiltrados.add(tour);
+            }
+        }
+        return toursFiltrados;
     }
 }

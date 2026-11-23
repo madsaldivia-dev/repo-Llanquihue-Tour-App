@@ -21,35 +21,53 @@ public class Main {
     public static void main(String[] args) {
 
         obtenerTours();
+        System.out.println("**********************************");
+        filtrarToursPorRango();
     }
 
     private static void obtenerTours() {
         // Crea una instancia de GestorDatos para acceder
         // al método que carga los tours desde el archivo.
-        GestorDatos gestor = new GestorDatos();
+        GestorDatos gestor = new GestorDatos("resources/Tours.txt");
 
         // Carga todos los tours almacenados en el archivo
         // "Tours.txt" y los guarda en un ArrayList.
         ArrayList<Tour> tours =
-                gestor.cargarTours("resources/Tours.txt");
+                gestor.listarTour("resources/Tours.txt");
 
-        System.out.println("=== TODOS LOS TOURS ===");
+        if (!tours.isEmpty()) {
 
-        // Recorre la lista completa de tours y muestra
-        // la información de cada uno utilizando el método toString().
-        for (Tour tour : tours) {
+            System.out.println("=== TODOS LOS TOURS ===");
+
+            // Recorre la lista completa de tours y muestra
+            // la información de cada uno utilizando el método toString().
+            for (Tour tour : tours) {
+                System.out.println(tour);
+            }
+        } else {
+            System.out.println("No existen tours registrados");
+        }
+    }
+private static void filtrarToursPorRango (){
+    GestorDatos gestor = new GestorDatos("resources/Tours.txt");
+    int precioMinimo = 10000;
+    int precioMaximo = 20000;
+
+    ArrayList<Tour> toursFiltrados = gestor.buscarToursPorRangoPrecio(precioMinimo, precioMaximo);
+
+
+    if ((!toursFiltrados.isEmpty())) {
+
+        System.out.println("=== TOURS ENTRE $" + precioMinimo + " Y $" + precioMaximo + " ===");
+        for (Tour tour : toursFiltrados) {
             System.out.println(tour);
         }
 
-        System.out.println("\n=== TOURS SOBRE $20.000 ===");
+    }else {
+        System.out.println("No se encontraron tours en ese rango de precio.");
+    }
 
-        // Recorre nuevamente la lista de tours.
-        for (Tour tour : tours) {
-
-            // Recorre nuevamente la lista de tours.
-            if (tour.getPrecio() > 20000) {
-                System.out.println(tour);
-            }
-        }
     }
 }
+
+

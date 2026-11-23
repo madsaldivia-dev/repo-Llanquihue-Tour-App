@@ -1,5 +1,5 @@
 Volcan Osorno;Aventura;250000
 Lago Todos Los Santos;Naturaleza;18000
 Frutillar;Cultural;12000
-Saltos del Petrohue;Naturaleza;22000
+Saltos del Petrohue;Naturaleza;20000
 Puerto Varas;Gastronomico;85000
