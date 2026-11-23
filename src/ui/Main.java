@@ -20,18 +20,25 @@ public class Main {
      */
     public static void main(String[] args) {
 
+        // Muestra todos los tours cargados desde el archivo.
         obtenerTours();
+
         System.out.println("**********************************");
+
+        // Muestra los tours filtrados por rango de precio.
         filtrarToursPorRango();
     }
 
+
+    /**
+     * Obtiene y muestra todos los tours registrados.
+     */
     private static void obtenerTours() {
+
         // Crea una instancia de GestorDatos para acceder
-        // al método que carga los tours desde el archivo.
         GestorDatos gestor = new GestorDatos("resources/Tours.txt");
 
-        // Carga todos los tours almacenados en el archivo
-        // "Tours.txt" y los guarda en un ArrayList.
+        // Obtiene la lista completa de tours.
         ArrayList<Tour> tours =
                 gestor.listarTour("resources/Tours.txt");
 
@@ -48,24 +55,25 @@ public class Main {
             System.out.println("No existen tours registrados");
         }
     }
-private static void filtrarToursPorRango (){
-    GestorDatos gestor = new GestorDatos("resources/Tours.txt");
-    int precioMinimo = 10000;
-    int precioMaximo = 20000;
 
-    ArrayList<Tour> toursFiltrados = gestor.buscarToursPorRangoPrecio(precioMinimo, precioMaximo);
+    private static void filtrarToursPorRango() {
+        GestorDatos gestor = new GestorDatos("resources/Tours.txt");
+        int precioMinimo = 10000;
+        int precioMaximo = 20000;
+
+        ArrayList<Tour> toursFiltrados = gestor.buscarToursPorRangoPrecio(precioMinimo, precioMaximo);
 
 
-    if ((!toursFiltrados.isEmpty())) {
+        if ((!toursFiltrados.isEmpty())) {
 
-        System.out.println("=== TOURS ENTRE $" + precioMinimo + " Y $" + precioMaximo + " ===");
-        for (Tour tour : toursFiltrados) {
-            System.out.println(tour);
+            System.out.println("=== TOURS ENTRE $" + precioMinimo + " Y $" + precioMaximo + " ===");
+            for (Tour tour : toursFiltrados) {
+                System.out.println(tour);
+            }
+
+        } else {
+            System.out.println("No se encontraron tours en ese rango de precio.");
         }
-
-    }else {
-        System.out.println("No se encontraron tours en ese rango de precio.");
-    }
 
     }
 }
