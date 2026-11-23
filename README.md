@@ -1,113 +1,85 @@
 # 🌋 Llanquihue Tour App
 
-### Sistema de gestión de tours turísticos del sur de Chile
-
-*Aventura entre volcanes, lagos y paisajes únicos de la Región de Los Lagos* 🌊
-
-## 📑 Contenido
-
-- Descripción
-- Conceptos aplicados
-- Estructura del proyecto
-- Diagrama de clases
-- Archivo de datos
-- Cómo ejecutar
-- Salida de ejemplo
-- Mejoras futuras
-- Autora
-
----
+Aplicación desarrollada en **Java 23** para la gestión de tours turísticos de la zona de Llanquihue. El sistema permite cargar información desde un archivo de texto, listar los tours disponibles y realizar búsquedas por rango de precios.
 
 ## 📋 Descripción
 
-**Llanquihue Tour App** es una aplicación desarrollada en Java que permite cargar y gestionar información de tours turísticos desde un archivo de texto.
+El proyecto utiliza un archivo externo (`Tours.txt`) para almacenar los datos de los tours. Al ejecutar la aplicación, los datos son leídos y convertidos en objetos de la clase `Tour`.
 
-La aplicación lee los datos almacenados en un archivo `.txt`, crea objetos de tipo `Tour` y posteriormente muestra la información por consola.
+Posteriormente, el sistema permite:
 
-Además, incorpora un filtro que permite visualizar únicamente aquellos tours cuyo precio sea superior a $20.000.
-
----
+- Mostrar todos los tours registrados.
+- Buscar tours dentro de un rango de precios definido.
+- Validar datos durante la lectura del archivo.
+- Manejar errores de lectura sin detener la ejecución del programa.
 
 ## 🧠 Conceptos aplicados
 
-| Concepto | Aplicación |
-|-----------|-----------|
-| 🧱 Programación Orientada a Objetos | Representación de tours mediante la clase `Tour` |
-| 🔒 Encapsulamiento | Uso de atributos privados con getters y setters |
-| 📦 Organización por paquetes | Separación en `model`, `data` y `ui` |
-| 📂 Lectura de archivos | Uso de `BufferedReader` y `FileReader` |
-| 📋 Colecciones | Uso de `ArrayList<Tour>` |
-| ⚠️ Manejo de excepciones | Captura de errores mediante `try-catch` |
-| 📝 Text Blocks | Formato de salida mediante `"""` y `.formatted()` |
-
----
+- **Programación Orientada a Objetos (POO)**.
+- **Encapsulamiento** mediante atributos privados, getters y setters.
+- **Colecciones** utilizando `ArrayList`.
+- **Lectura de archivos** con `BufferedReader`.
+- **Manejo de excepciones** mediante `try-catch`.
+- **Validación de datos** antes de crear los objetos.
+- **Separación por capas** utilizando los paquetes `ui`, `data` y `model`.
 
 ## 🗂️ Estructura del proyecto
 
 ```text
-LLanquihue-Tourapp/
-│
-├── resources/
-│   └── Tours.txt
-│
-├── src/
-│   ├── data/
-│   │   └── GestorDatos.java
-│   │
-│   ├── model/
-│   │   └── Tour.java
-│   │
-│   └── ui/
-│       └── Main.java
-│
-└── LLanquihue-Tourapp.iml
+src/
+├── ui/
+│   └── Main.java
+├── data/
+│   └── GestorDatos.java
+└── model/
+    └── Tour.java
+
+resources/
+└── Tours.txt
 ```
 
----
+## ✅ Funcionalidades
 
-## 🧩 Diagrama de clases
+### Mostrar tours
 
-```mermaid
-classDiagram
+La aplicación carga todos los tours almacenados en el archivo y los muestra por pantalla.
 
-class Tour{
-    -String nombre
-    -String tipo
-    -int precio
-    +Tour()
-    +Tour(nombre,tipo,precio)
-    +getNombre()
-    +getTipo()
-    +getPrecio()
-    +setNombre()
-    +setTipo()
-    +setPrecio()
-    +toString()
-}
+### Buscar tours por precio
 
-class GestorDatos{
-    +cargarTours(String ruta)
-}
+Permite filtrar los tours según un rango de precios definido en el código.
 
-class Main{
-    +main(String[] args)
-}
+Ejemplo:
 
-Main --> GestorDatos
-GestorDatos --> Tour
+```java
+int precioMinimo = 10000;
+int precioMaximo = 20000;
 ```
 
----
+## ✅ Validaciones implementadas
 
-## 📂 Archivo de datos
+Durante la lectura del archivo se realizan las siguientes validaciones:
 
-El sistema obtiene la información desde el archivo:
+| Validación | Acción |
+|------------|---------|
+| Línea vacía | Se omite |
+| Cantidad incorrecta de campos | Se muestra mensaje y continúa la lectura |
+| Precio no numérico | Se captura la excepción y continúa la lectura |
+| Precio menor o igual a 0 | Se descarta el registro |
 
-```text
-resources/Tours.txt
-```
+Estas validaciones permiten que una línea incorrecta no impida la carga de las demás líneas válidas.
 
-Formato utilizado:
+## ⚠️ Manejo de excepciones
+
+La aplicación utiliza:
+
+- `IOException` para errores de lectura de archivos.
+- `NumberFormatException` para errores de conversión del precio.
+
+En ambos casos se muestra un mensaje descriptivo sin detener completamente la ejecución.
+
+## 📄 Formato del archivo Tours.txt
+
+El archivo debe contener una línea por cada tour utilizando el siguiente formato:
 
 ```text
 Nombre;Tipo;Precio
@@ -116,102 +88,56 @@ Nombre;Tipo;Precio
 Ejemplo:
 
 ```text
-Volcan Osorno;Aventura;250000
-Lago Todos Los Santos;Naturaleza;18000
-Frutillar;Cultural;12000
-Saltos del Petrohue;Naturaleza;22000
-Puerto Varas;Gastronomico;85000
+Tour Volcán Osorno;Aventura;15000
+Lago Todos los Santos;Naturaleza;18000
+Puerto Varas Histórico;Cultural;12000
 ```
-
----
 
 ## 🚀 Cómo ejecutar
 
-> [!IMPORTANTE]
-> El proyecto fue desarrollado utilizando Java 23 y requiere JDK 15 o superior debido al uso de Text Blocks.
+### Requisitos
 
-### Opción 1 · IntelliJ IDEA
+- JDK 23 o superior.
+- IntelliJ IDEA.
+
+### Pasos
 
 1. Abrir el proyecto en IntelliJ IDEA.
-2. Verificar que el JDK configurado sea Java 23.
-3. Ejecutar la clase `Main.java`.
+2. Verificar que exista el archivo `resources/Tours.txt`.
+3. Ejecutar la clase `Main`.
+4. Revisar la salida generada en la consola.
 
-### Opción 2 · Terminal
-
-Compilar:
-
-```bash
-javac -d out src/model/*.java src/data/*.java src/ui/*.java
-```
-
-Ejecutar:
-
-```bash
-java -cp out ui.Main
-```
-
----
-
-## 🖥️ Salida de ejemplo
+## 🖥️ Ejemplo de salida
 
 ```text
 === TODOS LOS TOURS ===
 
 ===== TOUR =====
-Nombre: Volcan Osorno
+Nombre: Tour Volcán Osorno
 Tipo: Aventura
-Precio: $250000
-=================
+Precio: $15000
+================
 
 ===== TOUR =====
-Nombre: Lago Todos Los Santos
-Tipo: Naturaleza
-Precio: $18000
-=================
-
-===== TOUR =====
-Nombre: Frutillar
+Nombre: Puerto Varas Histórico
 Tipo: Cultural
 Precio: $12000
-=================
+================
+
+**********************************
+
+=== TOURS ENTRE $10000 Y $20000 ===
 
 ===== TOUR =====
-Nombre: Saltos del Petrohue
-Tipo: Naturaleza
-Precio: $22000
-=================
-
-===== TOUR =====
-Nombre: Puerto Varas
-Tipo: Gastronomico
-Precio: $85000
-=================
+Nombre: Tour Volcán Osorno
+Tipo: Aventura
+Precio: $15000
+================
 ```
-
-### Tours filtrados
-
-```text
-=== TOURS SOBRE $20.000 ===
-
-Volcan Osorno
-Saltos del Petrohue
-Puerto Varas
-```
-
----
-
-## 🔮 Mejoras futuras
-
-- [ ] Validar el formato de los datos antes de crear objetos.
-- [ ] Agregar búsqueda por tipo de tour.
-- [ ] Ordenar tours por precio.
-- [ ] Implementar menú interactivo por consola.
-- [ ] Incorporar escritura de datos en archivos.
-- [ ] Agregar pruebas unitarias con JUnit 5.
-- [ ] Implementar interfaz gráfica con JavaFX.
-
----
 
 ## 👩‍💻 Autora
 
-### Madeleine Saldivia
+**Madeleine Alizet Vergara Saldivia**
+
+Estudiante de Analista Programador Computacional.
+Proyecto desarrollado para la asignatura de Programación Orientada a Objetos utilizando Java 23.
